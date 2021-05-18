@@ -28,6 +28,7 @@ const Login = () => {
         e.preventDefault()
 
         if (isSignUp) {
+            console.log(formData.job)
             
             auth.createUserWithEmailAndPassword(formData.email, formData.password )
                 .then(userAuth => {
@@ -50,7 +51,7 @@ const Login = () => {
             // auth
             auth.signInWithEmailAndPassword(formData.email, formData.password)
                 .then(userAuth => {
-                    console.log(userAuth.user.profileURL)
+                    console.log(userAuth.user)
                     dispatch(login({
                         name: userAuth.user.name,
                         email: userAuth.user.email,

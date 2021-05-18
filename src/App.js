@@ -25,9 +25,7 @@ function App() {
         dispatch(login({
           email: userAuth.email,
           uid: userAuth.uid,
-          name: userAuth.name,
           profile: userAuth.photoURL,
-          job: userAuth.job
         }))
       } else {
         dispatch(logout());

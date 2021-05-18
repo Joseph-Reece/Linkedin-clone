@@ -45,11 +45,7 @@ const Feed = () => {
         e.preventDefault()
        /*  setPosts(posts.concat(postContent))        
         */
-        db.collection('posts').add({
-            user: user,
-            post:{content:postContent},
-            timestamp:firebase.firestore.FieldValue.serverTimestamp()
-        })
+     
         setPostContent('') 
     }
     
