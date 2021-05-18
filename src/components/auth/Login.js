@@ -6,8 +6,10 @@ import {auth} from '../../assets/firebase'
 
 import Input from './input'
 import useStyles from './styles'
-import {user} from '../../assets/dummyData'
+import {userr} from '../../assets/dummyData'
 import { login } from '../../features/userSlice'
+import {db} from '../../assets/firebase'
+import firebase from 'firebase'
 
 
 const initialState = { firstName: '', lastName: '', email: '', password: '', confirmPassword: '', job: '' };
@@ -28,22 +30,29 @@ const Login = () => {
         e.preventDefault()
 
         if (isSignUp) {
-            console.log(formData.job)
+            // console.log(`${formData.firstName} ${formData.lastName} `)
             
             auth.createUserWithEmailAndPassword(formData.email, formData.password )
                 .then(userAuth => {
                     userAuth.user.updateProfile({
-                        name: `${formData.firstName} ${formData.lastName} `,
-                        photoURL: user.profile,
-                        job:formData.job
+                        displayName: `${formData.firstName} ${formData.lastName} `,
+                        photoURL: userr.profile,
+                    }).then(() => {
+                        db.collection('users').add({
+                            uid: userAuth.user.uid,
+                            description:formData.job,
+                            coverImg:userr.coverImg,
+                            timestamp:firebase.firestore.FieldValue.serverTimestamp()
+                        })
                     })
                     .then(() => {
                         dispatch(login({
                             email: userAuth.user.email,
                             uid: userAuth.user.uid,    
-                            name: `${formData.firstName} ${formData.lastName} `,
-                            photoURL: user.profile,
-                            job:formData.job
+                            name:userAuth.user.displayName,
+                            profile: userAuth.user.photoURL,
+                            coverImg:userr.coverImg,
+                            description:formData.job,
                         }))
                     })
                 }).catch(error => console.log(error))
@@ -51,9 +60,9 @@ const Login = () => {
             // auth
             auth.signInWithEmailAndPassword(formData.email, formData.password)
                 .then(userAuth => {
-                    console.log(userAuth.user)
                     dispatch(login({
-                        name: userAuth.user.name,
+                        name: userAuth.user.displayName,
+                        job: userAuth.user.description,
                         email: userAuth.user.email,
                         uid: userAuth.user.uid,
                         profile: userAuth.user.profileURL,

@@ -20,12 +20,16 @@ function App() {
 
   useEffect(() => {
     auth.onAuthStateChanged(userAuth => {
+      
       if (userAuth) {
-        console.log(` Appjs ${userAuth.name} ${userAuth.email}`)
+
+        console.log(userAuth)
+
         dispatch(login({
           email: userAuth.email,
           uid: userAuth.uid,
           profile: userAuth.photoURL,
+          name: userAuth.displayName,
         }))
       } else {
         dispatch(logout());
@@ -33,6 +37,7 @@ function App() {
     })
 
   }, [dispatch])
+  
 
   return (
     <div className="app">

@@ -1,4 +1,4 @@
-export const user = {
+export const userr = {
     name: "Joseph Ndirangu",
     job: 'Web Developer',
     profile: 'https://images.pexels.com/photos/7532775/pexels-photo-7532775.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',

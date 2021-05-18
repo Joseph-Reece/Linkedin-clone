@@ -3,12 +3,11 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 import { selectUser } from '../../features/userSlice'
 
-// import {user} from '../../assets/dummyData'
+import {userr} from '../../assets/dummyData'
 
 import './sidebar.css'
 const Sidebar = () => {
     const user = useSelector(selectUser)
-    console.log(user)
     const recentItem = (topic) => (
 
         <div className="sidebar__recentItem">
@@ -21,10 +20,10 @@ const Sidebar = () => {
     return (
         <div className="sidebar">
            <div className="sidebar__top">
-               <img src={user.coverImg} alt="" />
+               <img src={userr.coverImg} alt="" />
                <Avatar className="sidebar__avatar" src={user.profile} />
                <h2>{user.name}</h2>
-               <h4>{user.job}</h4>
+               <h4>{user.email}</h4>
            </div>
 
            <div className="sidebar__stats">

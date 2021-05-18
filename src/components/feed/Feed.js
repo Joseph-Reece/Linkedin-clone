@@ -12,11 +12,17 @@ import {db} from '../../assets/firebase'
 import firebase from 'firebase'
 
 
-import {user} from '../../assets/dummyData'
+import { useSelector } from 'react-redux'
+import { selectUser } from '../../features/userSlice'
+
+
+// import {user} from '../../assets/dummyData'
 
 const Feed = () => {
     const [postContent, setPostContent] = useState('')
     const [posts, setPosts] = useState([])
+    
+    const user = useSelector(selectUser)
 
     useEffect(() => {
 
@@ -45,7 +51,11 @@ const Feed = () => {
         e.preventDefault()
        /*  setPosts(posts.concat(postContent))        
         */
-     
+        db.collection('posts').add({
+            user: user,
+            post:{content:postContent},
+            timestamp:firebase.firestore.FieldValue.serverTimestamp()
+        })
         setPostContent('') 
     }
     
